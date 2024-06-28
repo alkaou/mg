@@ -9,7 +9,7 @@ fit_time = int(input("Nombre de fois du bouce : "))
 max_ecpoch = int(input("Nombre de EPOCHS : "))
 model = load_or_create_model(model_path)
 
-print("Entrainement du model est commencé !")
+print("L' entrainement du model est en cours...")
 for ft in range(fit_time):
     # Train the model
     model.fit(
@@ -22,5 +22,5 @@ for ft in range(fit_time):
     keras.models.save_model(model, model_path)
     print(f"étape {ft+1 } fini sur {fit_time}")
 
-print("Entrainement du model terminé !")
+print("L' entrainement du model est terminé !")
 
