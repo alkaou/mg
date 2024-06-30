@@ -8,11 +8,15 @@ md_name = SuperHelper.get_model_path()
 model = load_or_create_model(model_name=md_name)
 
 # Generate text
-while True:
-    prompt = input("Entrez votre prompt : ")
-    context = SuperTokenizer.encode(prompt)
-    context = np.array([context], dtype=np.int64)
-    # print(context)
+def chat(model):
+    while True:
+        prompt = input("Entrez votre prompt : ")
+        context = SuperTokenizer.encode(prompt)
+        context = np.array([context], dtype=np.int64)
+        # context = np.zeros((1, 1), dtype=np.int64)
+        # print(context)
 
-    generated = model.generate(context, max_new_tokens=50)
-    print(SuperTokenizer.decode(generated[0].numpy().tolist()))
+        generated = model.generate(context, max_new_tokens=50)
+        print(SuperTokenizer.decode(generated[0].numpy().tolist()))
+
+chat(model)
