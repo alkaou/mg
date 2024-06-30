@@ -1,5 +1,5 @@
 # hyperparameters
-vocab_size = 21578
+vocab_size = 6575
 batch_size = 16  # how many independent sequences will we process in parallel?
 block_size = 1024  # what is the maximum context length for predictions?
 max_iters = 5000

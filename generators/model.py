@@ -2,11 +2,14 @@ from importer import os, tf, keras, register_keras_serializable, layers, optimiz
 from BlockTransformer import Block
 from params import block_size, vocab_size, n_embd, n_head, n_layer, batch_size, learning_rate
 
+
 # Bigram Language Model
 @register_keras_serializable()
 class BigramLanguageModel(keras.Model):
     def __init__(self, vocab_size, n_embd, block_size, n_head, n_layer, **kwargs):
         super().__init__(**kwargs)
+        self.vocab_size = vocab_size
+        self.block_size = block_size
         self.token_embedding_table = layers.Embedding(vocab_size, n_embd)
         self.position_embedding_table = layers.Embedding(block_size, n_embd)
         self.blocks = [Block(n_embd, n_head) for _ in range(n_layer)]
@@ -15,12 +18,15 @@ class BigramLanguageModel(keras.Model):
 
     def call(self, idx, targets=None):
         B, T = idx.shape
+        if T > self.block_size:
+            raise ValueError(f"Input sequence length {T} exceeds block size {self.block_size}")
+
         tok_emb = self.token_embedding_table(idx)  # (B,T,C)
         pos_emb = self.position_embedding_table(
             tf.range(T)[tf.newaxis, :]
-        )  # initially (T,C) adding new axis and get # (1,T,C)
+        )  # (1,T,C)
         x = tok_emb + pos_emb  # (B,T,C)
-        for block in self.blocks:  # (B,T,C)
+        for block in self.blocks:
             x = block(x)
         x = self.ln_f(x)  # (B,T,C)
         logits = self.lm_head(x)  # (B,T,vocab_size)
@@ -50,7 +56,7 @@ class BigramLanguageModel(keras.Model):
 
     def generate(self, idx, max_new_tokens):
         for _ in range(max_new_tokens):
-            idx_cond = idx[:, -block_size:]
+            idx_cond = idx[:, -self.block_size:]
             logits, _ = self(idx_cond)
             logits = logits[:, -1, :]
             idx_next = tf.random.categorical(logits, num_samples=1)
@@ -60,9 +66,9 @@ class BigramLanguageModel(keras.Model):
     def get_config(self):
         config = super().get_config()
         config.update({
-            "vocab_size": self.token_embedding_table.input_dim,
+            "vocab_size": self.vocab_size,
             "n_embd": self.token_embedding_table.output_dim,
-            "block_size": self.position_embedding_table.input_dim,
+            "block_size": self.block_size,
             "n_head": self.blocks[0].sa.num_heads,
             "n_layer": len(self.blocks),
         })
@@ -71,7 +77,6 @@ class BigramLanguageModel(keras.Model):
     @classmethod
     def from_config(cls, config):
         return cls(**config)
-
 
 
 def create_model():

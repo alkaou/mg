@@ -17,6 +17,8 @@ def chat(model):
         # print(context)
 
         generated = model.generate(context, max_new_tokens=50)
+        # generated = model.predict(context)
+        # print(generated)
         print(SuperTokenizer.decode(generated[0].numpy().tolist()))
 
 chat(model)
