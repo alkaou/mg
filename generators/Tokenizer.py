@@ -8,7 +8,7 @@ tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=True)
 tokenizer.decoder = decoders.ByteLevel()
 tokenizer.post_processor = processors.ByteLevel(trim_offsets=True)
 trainer = trainers.BpeTrainer(
-    vocab_size=68000,
+    vocab_size=70000,
     min_frequency=2,
     initial_alphabet=pre_tokenizers.ByteLevel.alphabet()
 )
