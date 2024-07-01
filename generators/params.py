@@ -9,7 +9,7 @@ Epochs = max_iters // eval_interval
 
 learning_rate = 1e-6
 eval_iters = 200
-n_embd = 256
+n_embd = 192
 n_head = 4
 n_layer = 4
 dropout = 0.0
