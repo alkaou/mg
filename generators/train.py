@@ -9,6 +9,8 @@ fit_time = int(input("Nombre de fois du bouce : "))
 max_ecpoch = int(input("Nombre de EPOCHS : "))
 model = load_or_create_model(model_path)
 
+# model.summary()
+
 print("L' entrainement du model est en cours...")
 for ft in range(fit_time):
     # Train the model

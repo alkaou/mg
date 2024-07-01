@@ -1,5 +1,5 @@
 # hyperparameters
-vocab_size = 6575
+vocab_size = 68610
 batch_size = 16  # how many independent sequences will we process in parallel?
 block_size = 1024  # what is the maximum context length for predictions?
 max_iters = 5000
@@ -9,9 +9,9 @@ Epochs = max_iters // eval_interval
 
 learning_rate = 1e-6
 eval_iters = 200
-n_embd = 768
-n_head = 12
-n_layer = 12
+n_embd = 256
+n_head = 4
+n_layer = 4
 dropout = 0.0
 # ------------
 
