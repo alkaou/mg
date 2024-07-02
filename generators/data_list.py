@@ -6,6 +6,7 @@ DATA_LIST = [
     "datasets/poemes/poeme_br_2.txt",
     "datasets/poemes/poeme_br_3.txt",
     "datasets/poemes/poeme_br_4.txt",
+    "datasets/poemes/poeme_br_5.txt",
     # Educations
 
     # Philosophies
@@ -22,4 +23,5 @@ DATA_FOR_USE_NOW = [
     DATA_LIST[1],
     DATA_LIST[2],
     DATA_LIST[3],
+    DATA_LIST[4],
 ]
